@@ -21,8 +21,8 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t ranaliw/patient-record-service:${{ github.sha }} .
-        docker push ranaliw/patient-record-service:${{ github.sha }}
+        docker build -t hasaliit/patient-record-service:${{ github.sha }} .
+        docker push hasaliit/patient-record-service:${{ github.sha }}
 
     - name: Set up Kubeconfig
       run: |
@@ -31,4 +31,4 @@ jobs:
 
     - name: Update Kubernetes Deployment
       run: |
-        kubectl set image deployment/patient-record-service-blue patient-record-service=ranaliw/patient-record-service:${{ github.sha }} --record
+        kubectl set image deployment/patient-record-service-blue patient-record-service=hasaliit/patient-record-service:${{ github.sha }} --record
