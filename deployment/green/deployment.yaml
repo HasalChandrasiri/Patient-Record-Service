@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: patient-record-service
-          image: ranaliw/patient-record-service:latest
+          image: hasaliit/patient-record-service:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3001
