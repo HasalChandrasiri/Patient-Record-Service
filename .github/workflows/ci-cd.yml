@@ -23,12 +23,21 @@ jobs:
       run: |
         docker build -t hasaliit/patient-record-service:${{ github.sha }} .
         docker push hasaliit/patient-record-service:${{ github.sha }}
+        
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1 
 
     - name: Set up Kubeconfig
       run: |
-        mkdir -p ~/.kube
-        echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+        mkdir -p $HOME/.kube
+        echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+      env:
+        KUBECONFIG: $HOME/.kube/config
 
     - name: Update Kubernetes Deployment
       run: |
-        kubectl set image deployment/patient-record-service-blue patient-record-service=hasaliit/patient-record-service:${{ github.sha }} --record
+        kubectl set image deployment/patient-record-service-blue patient-record-service=hasaliit/patient-record-service:${{ github.sha }}
